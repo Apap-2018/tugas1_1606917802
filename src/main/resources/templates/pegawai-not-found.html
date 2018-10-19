@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    
+    <style>
+   		.body {
+    text-align: center!important;
+    }
+    </style>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<div class="jumbotron text-xs-center">
+  <h3 class="display-3">Pegawai Tidak Ditemukan</h3>
+  
+  <hr>
+  <p class="lead">
+    <a class="btn btn-primary btn-sm" href="/" role="button">Kembali ke halaman awal</a>
+  </p>
+</div>
+</body>
+</html>

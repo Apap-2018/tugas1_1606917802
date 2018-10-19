@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>View Pegawai</title>
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+<style>
+.align-center, .center {
+	text-align: center !important;
+}
+
+.profile-user-info {
+	display: table;
+	width: 98%;
+	width: calc(100% - 24px);
+	margin: 0 auto
+}
+
+.profile-info-row {
+	display: table-row
+}
+
+.profile-info-name, .profile-info-value {
+	display: table-cell;
+	border-top: 1px dotted #D5E4F1
+}
+
+.profile-info-name {
+	text-align: right;
+	padding: 6px 10px 6px 4px;
+	font-weight: 400;
+	color: #667E99;
+	background-color: transparent;
+	width: 110px;
+	vertical-align: middle
+}
+
+.profile-info-value {
+	padding: 6px 4px 6px 6px
+}
+
+.profile-info-value>span+span:before {
+	display: inline;
+	content: ",";
+	margin-left: 1px;
+	margin-right: 3px;
+	color: #666;
+	border-bottom: 1px solid #FFF
+}
+
+.profile-info-value>span+span.editable-container:before {
+	display: none
+}
+
+.profile-info-row:first-child .profile-info-name, .profile-info-row:first-child .profile-info-value
+	{
+	border-top: none
+}
+
+.profile-user-info-striped {
+	border: 1px solid #DCEBF7
+}
+
+.profile-user-info-striped .profile-info-name {
+	color: #336199;
+	background-color: #EDF3F4;
+	border-top: 1px solid #F7FBFF
+}
+
+.profile-user-info-striped .profile-info-value {
+	border-top: 1px dotted #DCEBF7;
+	padding-left: 12px
+}
+</style>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container-fluid">
+		<h3 th:text="'Lihat Data Pegawai - ' + ${pegawai.nip}"></h3>
+		<div class="profile-user-info">
+			<div class="profile-info-row">
+				<div class="profile-info-name">NIP</div>
+					<div class="profile-info-value">
+						<p th:text="${pegawai.nip}"></p>
+					</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Nama</div>
+
+				<div class="profile-info-value">
+					<p th:text="${pegawai.nama}"></p>
+				</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Tempat Lahir</div>
+
+				<div class="profile-info-value">
+					<p th:text="${pegawai.tempat_lahir}"></p>
+				</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Tanggal Lahir</div>
+
+				<div class="profile-info-value">
+					<p th:text="${pegawai.tanggalLahir}"></p>
+				</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Tahun Masuk</div>
+
+				<div class="profile-info-value">
+					<p th:text="${pegawai.tahun_masuk}"></p>
+				</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Nama Instansi</div>
+
+				<div class="profile-info-value">
+					<p th:text="${instansi} + ' - ' + ${provinsi}"></p>
+				</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Jabatan</div>
+
+				<div class="profile-info-value">
+					<ul>
+						<li th:each="jabatan : ${jabatan}">
+							<p th:text="${jabatan.nama}"></p>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="profile-info-row">
+				<div class="profile-info-name">Gaji</div>
+
+				<div class="profile-info-value">
+					<p th:text="'Rp. ' + ${gaji}"></p>
+				</div>
+			</div>
+		</div>
+		<form th:action="@{/pegawai/ubah/}" th:method="GET">
+					<input type="hidden" name="nipPegawai" th:value="${pegawai.nip}"></input>
+			<button value="submit" class="btn btn-primary">Ubah</button>
+		</form>
+	</div>
+</body>
+
+</html>
