@@ -10,6 +10,6 @@ import com.apap.tugas1.model.ProvinsiModel;
 
 
 public interface ProvinsiService {
-	Optional<ProvinsiModel> getProvinsiDetailById(Long id);
+	Optional<ProvinsiModel> getProvinsiDetailById(Long idProvinsi);
 	List<ProvinsiModel> allProvinsi();
 }

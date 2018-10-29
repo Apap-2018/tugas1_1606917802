@@ -17,11 +17,13 @@ public interface JabatanService {
 	
 	List<JabatanModel> allJabatan();
 	
-	Optional<JabatanModel> getjabatanDetailById(Long id);
+	//Optional<JabatanModel> getjabatanDetailById(Optional<Long> idJabatan);
 	
 	void updateJabatan(JabatanModel jabatan);
 	
 	void deleteJabatan(long id);
+
+	Optional<JabatanModel> getjabatanDetailById(Long id);
 	
 
 }

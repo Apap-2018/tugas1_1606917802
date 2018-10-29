@@ -8,12 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.PegawaiModel;
+import com.apap.tugas1.model.ProvinsiModel;
 import com.apap.tugas1.service.InstansiService;
 import com.apap.tugas1.service.PegawaiService;
+import com.apap.tugas1.service.ProvinsiService;
 
 @Controller
 public class InstansiController {
@@ -23,7 +26,10 @@ public class InstansiController {
 	@Autowired
     private PegawaiService pegawaiService;
 
-	 
+	@Autowired
+    private ProvinsiService provinsiService;
+
+	
 	 @RequestMapping(value = "/pegawai/termuda-tertua", method = RequestMethod.GET)
 	    private String viewmudatua(@RequestParam(value = "idInstansi") Long instansiId, Model model) {
 		InstansiModel temp = instansiService.getInstansiDetailById(instansiId).get();
@@ -41,4 +47,11 @@ public class InstansiController {
 		model.addAttribute("gajimuda", pegawaimuda.getGaji());
 		return "view-tua-muda";
 	 }
+	 
+	 @RequestMapping(value = "/instansi/getInstansiByProvinsi", method = RequestMethod.GET)
+		@ResponseBody
+		public List<InstansiModel> getInstansi(@RequestParam (value = "idProvinsi", required = true) Long idProvinsi) {
+			ProvinsiModel provinsi = provinsiService.getProvinsiDetailById(idProvinsi).get();
+		    return instansiService.getInstansiByProvinsi(provinsi);
+		}
 }

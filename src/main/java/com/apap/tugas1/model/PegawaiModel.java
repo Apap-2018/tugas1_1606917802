@@ -46,8 +46,8 @@ public class PegawaiModel implements Serializable{
 
 	@NotNull
 	@Size(max = 255)
-	@Column(name= "tempat_lahir", nullable= false)
-	private String tempat_lahir;
+	@Column(name= "tempatLahir", nullable= false)
+	private String tempatLahir;
 
 	@NotNull
 	@Column(name= "tanggalLahir", nullable= false)
@@ -55,8 +55,8 @@ public class PegawaiModel implements Serializable{
 
 	@NotNull
 	@Size(max = 255)
-	@Column(name= "tahun_masuk", nullable= false)
-	private String tahun_masuk;
+	@Column(name= "tahunMasuk", nullable= false)
+	private String tahunMasuk;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_instansi", referencedColumnName="id", nullable= false)
@@ -64,6 +64,7 @@ public class PegawaiModel implements Serializable{
 	@JsonIgnore
 	private InstansiModel instansi;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="pegawai", fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<JabatanModel> listJabatan;
 
@@ -83,12 +84,12 @@ public class PegawaiModel implements Serializable{
 		this.nip = nip;
 	}
 
-	public String getTempat_lahir() {
-		return tempat_lahir;
+	public String getTempatLahir() {
+		return tempatLahir;
 	}
 
-	public void setTempat_lahir(String tempat_lahir) {
-		this.tempat_lahir = tempat_lahir;
+	public void setTempatLahir(String tempatLahir) {
+		this.tempatLahir = tempatLahir;
 	}
 
 	public Date getTanggalLahir() {
@@ -107,12 +108,12 @@ public class PegawaiModel implements Serializable{
 		this.tanggalLahir = tanggalLahir;
 	}
 
-	public String getTahun_masuk() {
-		return tahun_masuk;
+	public String getTahunMasuk() {
+		return tahunMasuk;
 	}
 
-	public void setTahun_masuk(String tahun_masuk) {
-		this.tahun_masuk = tahun_masuk;
+	public void setTahunMasuk(String tahunMasuk) {
+		this.tahunMasuk = tahunMasuk;
 	}
 
 	public InstansiModel getInstansi() {

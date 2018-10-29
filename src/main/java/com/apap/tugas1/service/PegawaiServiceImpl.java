@@ -1,8 +1,11 @@
 package com.apap.tugas1.service;
 import com.apap.tugas1.model.InstansiModel;
+import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.PegawaiModel;
+import com.apap.tugas1.model.ProvinsiModel;
 import com.apap.tugas1.repository.PegawaiDb;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +49,31 @@ public class PegawaiServiceImpl implements PegawaiService {
 		pegawaiDb.save(pegawai);
 	}
 
+	@Override
+	public List<PegawaiModel> getPegawaiByInstansi(InstansiModel instansi) {
+		// TODO Auto-generated method stub
+		return pegawaiDb.findByInstansi(instansi);
+	}
+
+	@Override
+	public List<PegawaiModel> getPegawaiByInstansiAndTanggalLahirAndTahunMasuk(InstansiModel instansi,
+			Date tanggalLahir, String tahunMasuk) {
+		// TODO Auto-generated method stub
+		return pegawaiDb.findByInstansiAndTanggalLahirAndTahunMasuk(instansi, tanggalLahir, tahunMasuk);
+	}
+
+
+	@Override
+	public void updatePegawai(String nip, PegawaiModel pegawai) {
+		PegawaiModel updatePegawai = pegawaiDb.findByNip(nip).get();
+		updatePegawai.setNama(pegawai.getNama());
+		updatePegawai.setNip(pegawai.getNip());
+		updatePegawai.setTanggalLahir(pegawai.getTanggalLahir());
+		updatePegawai.setTempatLahir(pegawai.getTempatLahir());
+		updatePegawai.setTahunMasuk(pegawai.getTahunMasuk());
+			updatePegawai.setInstansi(pegawai.getInstansi());
+			updatePegawai.setListJabatan(pegawai.getListJabatan());
+			pegawaiDb.save(updatePegawai);
+		}
 
 }

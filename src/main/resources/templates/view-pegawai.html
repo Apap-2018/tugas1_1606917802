@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>View Pegawai</title>
+<title>Lihat Pegawai</title>
 <object th:include="fragments/fragment :: css" th:remove="tag"></object>
 <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
@@ -101,7 +101,7 @@
 				<div class="profile-info-name">Tempat Lahir</div>
 
 				<div class="profile-info-value">
-					<p th:text="${pegawai.tempat_lahir}"></p>
+					<p th:text="${pegawai.tempatLahir}"></p>
 				</div>
 			</div>
 
@@ -117,7 +117,7 @@
 				<div class="profile-info-name">Tahun Masuk</div>
 
 				<div class="profile-info-value">
-					<p th:text="${pegawai.tahun_masuk}"></p>
+					<p th:text="${pegawai.tahunMasuk}"></p>
 				</div>
 			</div>
 
@@ -149,10 +149,9 @@
 				</div>
 			</div>
 		</div>
-		<form th:action="@{/pegawai/ubah/}" th:method="GET">
-					<input type="hidden" name="nipPegawai" th:value="${pegawai.nip}"></input>
-			<button value="submit" class="btn btn-primary">Ubah</button>
-		</form>
+		<a th:href="@{/pegawai/ubah?nip={nip}(nip=${pegawai.nip})}">
+  								<button type="submit" class="btn btn-primary">Ubah</button>
+  						</a>
 	</div>
 </body>
 

@@ -40,6 +40,7 @@ public class JabatanModel implements Serializable {
 	@Column(name= "gaji_pokok", nullable= false)
 	private Double gaji_pokok;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="jabatan_pegawai", joinColumns = {@JoinColumn (name = "id_jabatan", referencedColumnName="id", nullable = false)},
 	inverseJoinColumns = {@JoinColumn (name="id_pegawai", referencedColumnName="id", nullable = false)})

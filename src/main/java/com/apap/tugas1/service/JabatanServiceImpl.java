@@ -45,6 +45,5 @@ public class JabatanServiceImpl implements JabatanService {
 		JabatanModel temp = jabatanDb.getOne(id);
 		jabatanDb.delete(temp);
 	}
-	
-	
+
 }
