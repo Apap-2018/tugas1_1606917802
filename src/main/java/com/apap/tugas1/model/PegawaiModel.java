@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Collections;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -30,7 +31,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="pegawai")
 public class PegawaiModel implements Serializable{
 	@Id
-	@Size(max = 20)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -65,8 +65,10 @@ public class PegawaiModel implements Serializable{
 	private InstansiModel instansi;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy="pegawai", fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-	private List<JabatanModel> listJabatan;
+	@ManyToMany()
+	@JoinTable(name = "jabatan_pegawai", joinColumns = { @JoinColumn(name = "id_pegawai") }, inverseJoinColumns = { @JoinColumn(name = "id_jabatan") })
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private List<JabatanModel> listJabatan = new ArrayList<JabatanModel>();
 
 	public Long getId() {
 		return id;
@@ -96,15 +98,8 @@ public class PegawaiModel implements Serializable{
 		return tanggalLahir;
 	}
 	
-	public double getGaji() {
-		List<JabatanModel> listJabatan = this.getListJabatan();
-		Collections.sort(listJabatan, compareGaji);
-		double gaji = listJabatan.get(listJabatan.size()-1).getGaji_pokok();
-		double tunjangan = (this.instansi.getProvinsi().getPresentase_tunjangan()/100);
-		return gaji + (tunjangan*gaji);
-	}
 
-	public void setTanggalLahir(Date tanggaLahir) {
+	public void setTanggalLahir(Date tanggalLahir) {
 		this.tanggalLahir = tanggalLahir;
 	}
 
@@ -127,7 +122,14 @@ public class PegawaiModel implements Serializable{
 	public List<JabatanModel> getListJabatan() {
 		return listJabatan;
 	}
-
+	
+	public List<JabatanModel> getListJabatanSortByGaji() {
+		if(listJabatan.size()>1) {
+			Collections.sort(listJabatan, new SortByGajiPokok());
+		}
+		return listJabatan;
+	}
+	
 	public void setListJabatan(List<JabatanModel> listJabatan) {
 		this.listJabatan = listJabatan;
 	}
@@ -140,14 +142,17 @@ public class PegawaiModel implements Serializable{
 		this.nama = nama;
 	}
 	
-	public static Comparator<JabatanModel> compareGaji = new Comparator<JabatanModel>() {
-		  public int compare(JabatanModel o1, JabatanModel o2) {
-		   Double gaji1 = o1.getGaji_pokok();
-		   Double gaji2 = o2.getGaji_pokok();
-		   
-		   return gaji1.compareTo(gaji2);
-		  }
-		 };
+	public int getGaji() {
+		JabatanModel jabatan = listJabatan.get(listJabatan.size()-1);
+		double tunjangan = (this.getInstansi().getProvinsi().getPresentase_tunjangan()/100);
+		return (int) ( jabatan.getGaji_pokok() + (tunjangan * jabatan.getGaji_pokok()));
+	}
+
+	class SortByGajiPokok implements Comparator<JabatanModel>{
+		public int compare (JabatanModel a, JabatanModel b) {
+			return (int) (a.getGaji_pokok()-b.getGaji_pokok());
+		}
+	}
 }
 
 

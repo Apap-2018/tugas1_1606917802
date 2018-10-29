@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="provinsi")
 public class ProvinsiModel implements Serializable{
 	@Id
-	@Size(max = 10)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
